@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RestaurantBooking.Views.RestaurantsDetailPage"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Reservation" Clicked="AddReservation_Clicked" />
+    </ContentPage.ToolbarItems>
+    <StackLayout Spacing="20" Padding="15">
+		<Label Text="{Binding Item.Text}" FontSize="Medium"/>
+        <Label Text="{Binding Item.Description}" FontSize="Small"/>
+        <Label Text="Reservations:" FontSize="Medium" />
+        <ListView x:Name="ReservationsListView"
+				ItemsSource="{Binding Item.Reservations}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadRestaurantReservationsCommand}"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                CachingStrategy="RecycleElement">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell IsEnabled="False">
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Time, StringFormat='{}{0:hh\\:mm}'}"
+                       LineBreakMode="NoWrap"
+                       Style="{DynamicResource ListItemTextStyle}"
+                       FontSize="16"/>
+                            <Label Text="{Binding Name}"
+                       LineBreakMode="NoWrap"
+                       Style="{DynamicResource ListItemDetailTextStyle}"
+                       FontSize="13"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
